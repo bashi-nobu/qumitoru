@@ -1,32 +1,53 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+  <v-app>
+    <sidebar v-show="isLogin"  @logouted="hideSidebar" id="sidebar"></sidebar>
+
+    <v-main app>
+      <router-view
+        @logined="showSidebar"
+      />
+    </v-main>
+
+    <v-footer app>
+    </v-footer>
+  </v-app>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import router from "./router";
+import sidebar from './components/sidebar.vue'
 
-#nav {
-  padding: 30px;
+export default {
+  components: { sidebar },
+  name: 'App',
+  data: () => ({
+    isLogin: false
+  }),
+  mounted() {
+		this.checkLoggedIn();
+	},
+	methods: {
+		checkLoggedIn() {
+			this.$session.start();
+			if (!this.$session.has("token")) {
+				if(this.$route.path !== '/auth'){router.push("/auth").catch(()=>{});}
+			}else{
+        this.isLogin = true;
+        if(this.$route.path === '/auth'){router.push("/").catch(()=>{});}
+      }
+		},
+    showSidebar() {
+      this.isLogin = true;
+    },
+    hideSidebar() {
+      this.isLogin = false;
+    }
+	}
 }
+</script>
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
+<style scoped>
+@import "./assets/css/main.scss";
+@import "./assets/css/modal.scss";
 
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
 </style>
