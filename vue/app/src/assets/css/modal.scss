@@ -1,0 +1,11 @@
+.vm--modal {
+  width: 80% !important;
+  max-width: 600px !important;
+}
+.modal-header, .modal-body {
+  padding: 5px 25px;
+  color: gray;
+}
+.modal-header {
+  border-bottom: 1px solid #ddd;
+}
