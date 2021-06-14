@@ -21,6 +21,15 @@ server.options('*', cors());
 server.use(middlewares);
 server.use(jsonServer.bodyParser);
 
+server.post("/auth", (req, resp) => {
+	console.log(req.body['username'])
+	if(req.body && req.body['username'] === 'invaliduser'){
+		resp.status(400).json({ "non_field_errors": ["Unable to log in with provided credentials."]});
+	} else {
+		resp.status(200).json({ token: "dummytoken"});
+	}
+});
+
 server.use(router);
 server.listen(33000, () => {
     console.log('JSON Server is running');

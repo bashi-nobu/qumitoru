@@ -1,4 +1,4 @@
-import { mount, shallowMount, createLocalVue } from '@vue/test-utils'
+import { mount, shallowMount } from '@vue/test-utils'
 import Auth from '@/views/Auth.vue'
 import Vue from "vue"
 import Vuetify from "vuetify";
