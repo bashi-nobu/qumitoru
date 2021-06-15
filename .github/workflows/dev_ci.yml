@@ -20,7 +20,8 @@ jobs:
         --build-arg AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }} \
         --build-arg AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} \
         --build-arg BUCKET_NAME=${{ secrets.BUCKET_NAME }} \
-        --build-arg DJANGO_SECRET_KEY="${{ secrets.DJANGO_SECRET_KEY }}"
+        --build-arg DJANGO_SECRET_KEY="${{ secrets.DJANGO_SECRET_KEY }}" \
+        --build-arg IMAGE_SCAN_API_URL="${{ secrets.IMAGE_SCAN_API_URL }}"
         docker-compose -f docker-compose.ci.yml up -d
         sleep 20s
         docker ps -a
