@@ -3,6 +3,7 @@
     permanent
     expand-on-hover
     app
+    class="sidemenu"
   >
     <v-list>
       <v-list-item class="px-2">
@@ -96,18 +97,6 @@ export default {
   }
 }
 </script>
-<style scoped>
-  .sidemenu-logo-frame {
-    margin-right: 3px !important;
-    max-width: 170px !important;
-  }
-  .sidemenu-logo {
-    width: 40px;
-  }
-  .sidemenu-logo img {
-    width: 40px;
-  }
-  .v-icon, .v-list-item__title{
-    color: red;
-  }
+<style lang="scss">
+  @import "../assets/css/sidebar.scss";
 </style>
