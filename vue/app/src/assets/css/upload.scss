@@ -1,0 +1,44 @@
+.upload-form{
+  margin: 100px auto;
+  width: 85%;
+  max-width: 600px;
+  .mdi-camera-plus-outline::before {
+    color: coral !important;
+  }
+  &__title {
+    display: block !important;
+    text-align: center !important;
+    color: gray;
+    font-size: 1.25rem !important;
+  }
+  &__bth-frame {
+    .mdi-camera-plus-outline::before {
+      font-size: 110px !important;
+      color: coral !important;
+    }
+    .v-input__prepend-outer {
+      margin: 0 auto !important;
+    }
+    .v-input__icon--prepend {
+      width: 180px !important;
+      height: 180px !important;
+      border: 10px solid coral !important;
+      border-radius: 90px !important;
+    }
+    .loading {
+      width: 180px !important;
+      height: 180px !important;
+      margin-bottom: 15px !important;
+    }
+  }
+}
+
+.calculate-frame {
+  display: block;
+  text-align: center;
+  .uploadStatus {
+    display: block;
+    color: gray;
+    font-size: 12px;
+  }
+}
