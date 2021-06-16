@@ -5,6 +5,7 @@ import requests
 from rest_framework.views import APIView
 from django.core.files.storage import default_storage
 from django.http import JsonResponse
+from questionnaire.models import QuestionareScore, Questionare
 
 import boto3
 from boto3.session import Session
@@ -44,6 +45,16 @@ class UploadFile(APIView):
         uploaded_img_count = self.uploadedImgsCount(uploaded_imgs)
         responseData = {'count': uploaded_img_count}
         return JsonResponse(responseData)
+
+    def put(self, request, *args, **kwargs):
+        user_id = str(request.POST.get('user_id'))
+        take_at = self.convertStrDate(str(request.POST.get('take_at')))
+        # move from tmp dir to new dir
+        file_path_list = self.copyImgFromTmpToCalculateDir(user_id, request.POST.get('take_at'))
+        active_questionare = Questionare.objects.filter(is_active=1, user=user_id).first()
+        # save db
+        self.insertQuestionareData(user_id, take_at, active_questionare, file_path_list)
+        return JsonResponse({'result': 'SUCCESS'})
 
     """
     modules
@@ -91,4 +102,17 @@ class UploadFile(APIView):
         take_at = [int(i) for i in take_at.split('-')]
         take_at = datetime.date(take_at[0], take_at[1], take_at[2])
         return take_at
+
+    def insertQuestionareData(self, user_id, take_at, active_questionare, file_path_list):
+        questionareScores = []
+        for file in file_path_list:
+            questionareScore = QuestionareScore(
+              questionare_id=active_questionare.id,
+              file_path=file,
+              take_at=take_at,
+              day_of_week=take_at.weekday(),
+              user_id=user_id
+            )
+            questionareScores.append(questionareScore)
+        QuestionareScore.objects.bulk_create(questionareScores)
 
