@@ -4,6 +4,7 @@ import router from './router'
 import vuetify from './plugins/vuetify'
 import VueSession from 'vue-session'
 import VModal from 'vue-js-modal'
+import '@mdi/font/css/materialdesignicons.css'
 
 Vue.use(VueSession)
 Vue.use(VModal)

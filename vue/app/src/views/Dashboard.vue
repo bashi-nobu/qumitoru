@@ -4,12 +4,13 @@
 </template>
 
 <script>
-
 export default {
   name: 'Dashboard',
   data() {
+    return {
+      categoryAveList: [],
+      dailyScoreData: []
+    };
   }
 };
 </script>
-<style scoped>
-</style>
