@@ -60,5 +60,18 @@ services:
     container_name: jsonserver
     ports:
       - "33000:33000"
+  lambda:
+    container_name:
+      qumitoru-lambda-scanner
+    build:
+      context: .
+      dockerfile: ./docker/scanner/Dockerfile
+      args:
+        AWS_ACCESS_KEY_ID: ${QT_AWS_ACCESS_KEY_ID}
+        AWS_SECRET_ACCESS_KEY: ${QT_AWS_SECRET_ACCESS_KEY}
+    env_file:
+      ./docker/scanner/.env
+    ports:
+      - "9000:8080"
 volumes:
   mysqldata:
