@@ -6,6 +6,7 @@ from rest_framework.views import APIView
 from django.core.files.storage import default_storage
 from django.http import JsonResponse
 from questionnaire.models import QuestionareScore, Questionare
+from account.models import User
 
 import boto3
 from boto3.session import Session
@@ -15,6 +16,7 @@ AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
 AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
 IMAGE_SCAN_API_URL = os.environ['IMAGE_SCAN_API_URL']
 BUCKET_NAME = os.environ['BUCKET_NAME']
+DJG_ENV = os.environ['DJANGO_SETTINGS_MODULE']
 
 class UploadFile(APIView):
     permission_classes = [AllowAny]
@@ -23,13 +25,14 @@ class UploadFile(APIView):
         try:
             file = request.FILES['file']
             user_id = str(request.POST.get('user_id'))
-            if user_id != 'None':
+            if user_id != 'None' and self.is_validuser(user_id):
                 dt_now = datetime.datetime.now()
                 file_path = user_id + '/tmp/img_'+ dt_now.strftime('%Y_%m_%d_%H_%M_%S') +'.jpg'
                 default_storage.save(file_path, file) # ファイル保存
                 reading_result = self.request_read_file(file_path)
                 if reading_result == 'success':
                     uploaded_imgs = self.uploadedImgData(user_id)
+                    self.delete_file_in_test_env(file_path)
                     return JsonResponse({'result': 'SUCCESS', 'uploadFilesCount': self.uploadedImgsCount(uploaded_imgs)})
                 else:
                     default_storage.delete(file_path)
@@ -59,6 +62,13 @@ class UploadFile(APIView):
     """
     modules
     """
+    def is_validuser(self, user_id):
+        is_valid = False
+        user_quesryset = User.objects.filter(pk=user_id).first()
+        if user_quesryset is not None:
+            is_valid = True
+        return is_valid
+
     def request_read_file(self, file_path):
         json_data = json.dumps({"file_path": file_path})
         url = IMAGE_SCAN_API_URL
@@ -71,6 +81,10 @@ class UploadFile(APIView):
             print(e)
             result = 'error'
         return result
+
+    def delete_file_in_test_env(self, file_path):
+        if DJG_ENV == 'qumitoru.settings.test':
+            default_storage.delete(file_path)
 
     def uploadedImgData(self, user_id):
         session = Session(aws_access_key_id=AWS_ACCESS_KEY_ID, aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
