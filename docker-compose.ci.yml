@@ -48,5 +48,14 @@ services:
     container_name: jsonserver
     ports:
       - "33000:33000"
+  lambda:
+    container_name:
+      qumitoru-lambda-scanner
+    build:
+      context: .
+      dockerfile: ./docker/scanner/Dockerfile
+    tty: true
+    ports:
+      - "9000:8080"
 volumes:
   mysqldata:
