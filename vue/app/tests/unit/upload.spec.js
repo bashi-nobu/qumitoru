@@ -37,19 +37,19 @@ describe('Upload.vue', () => {
     wrapper.setData({
       uploadFilesCount: 0
     })
-    expect(wrapper.find('.startCalculateBtn').exists()).toBe(false)
+    expect(wrapper.find('.startAggregateBtn').exists()).toBe(false)
   })
 
   it('uploadFilesCountが0以上の場合は集計開始ボタンが表示される', async() => {
     const wrapper = shallowMount(Upload, {
       mocks: {
         $session
+      },
+      data(){
+        return { uploadFilesCount: 1 }
       }
     })
-    wrapper.setData({
-      uploadFilesCount: 1
-    })
-    expect(wrapper.find('.upload-form').exists()).toBeTruthy()
+    expect(wrapper.find('aggregatemodal-stub').exists()).toBeTruthy()
   })
 
 })

@@ -42,6 +42,9 @@ server.post("/upload", (req, resp) => {
     resp.status(200).json({ result: "SUCCESS",  uploadFilesCount: "2"});
   }
 });
+server.put("/upload", (req, resp) => {
+  resp.status(200).json({ result: "SUCCESS",  uploadFilesCount: "0"});
+});
 
 server.use(router);
 server.listen(33000, () => {
