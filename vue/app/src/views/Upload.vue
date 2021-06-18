@@ -24,6 +24,10 @@
       <v-divider></v-divider>
       <v-card-actions v-if="this.uploadFilesCount > 0" class="calculate-frame">
         <span class="uploadStatus">現在{{this.uploadFilesCount}}枚のアンケートがアップロードされています</span>
+        <AggregateModal
+          @resetUploadFileCount="resetUploadFilesCount"
+        >
+        </AggregateModal>
       </v-card-actions>
     </v-card>
   </div>
@@ -33,6 +37,7 @@
 import axios from 'axios'
 import Swal from 'sweetalert2';
 import { VueLoading } from 'vue-loading-template'
+import AggregateModal from '../components/aggregateModal.vue'
 
 export default {
   name: 'Upload',
@@ -69,26 +74,14 @@ export default {
       }
     }
   },
-  computed: {
-  },
   created () {
     this.getUploadedFileCount();
   },
   components: {
-    VueLoading
-  },
-  watch: {
+    VueLoading,
+    AggregateModal
   },
   methods: {
-    show : function() {
-      this.$modal.show('calculate-modal');
-    },
-    hide : function () {
-      this.$modal.hide('calculate-modal');
-    },
-    save : function () {
-      this.menu = false;
-    },
     getUploadedFileCount (){
       let config = {
         headers: {
@@ -104,6 +97,9 @@ export default {
       .catch(e => {
         console.log(e);
       })
+    },
+    resetUploadFilesCount() {
+      this.uploadFilesCount = 0
     },
     submit() {
       if (this.$refs.upload_form.validate()) {
@@ -152,9 +148,6 @@ export default {
           console.log(e);
         })
       }
-    },
-    resetForm() {
-      this.uploadFile = null;
     }
   }
 }

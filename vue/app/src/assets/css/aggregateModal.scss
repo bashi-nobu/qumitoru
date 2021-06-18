@@ -1,0 +1,27 @@
+.startAggregate {
+  display: block;
+  text-align: center;
+}
+.startAggregateBtn, .startAggregateConfirmBtn{
+  background: coral !important;
+  margin: 5px;
+  .v-btn__content {
+    color: white;
+    font-weight: bold;
+  }
+}
+.date-picker-field {
+  width: 200px !important;
+  margin: 10px auto;
+}
+.date-picker-field .v-input__icon--prepend {
+  border: none !important;
+  border-radius: 0px !important;
+  width: 30px !important;
+  height: 30px !important;
+}
+.loading {
+  width: 180px !important;
+  height: 180px !important;
+  margin-bottom: 15px !important;
+}
