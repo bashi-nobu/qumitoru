@@ -53,7 +53,7 @@ services:
       qumitoru-lambda-scanner
     build:
       context: .
-      dockerfile: ./docker/scanner/Dockerfile
+      dockerfile: ./docker/lambda/scanner/Dockerfile
     tty: true
     ports:
       - "9000:8080"

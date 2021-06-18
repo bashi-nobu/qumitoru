@@ -65,13 +65,13 @@ services:
       qumitoru-lambda-scanner
     build:
       context: .
-      dockerfile: ./docker/scanner/Dockerfile
+      dockerfile: ./docker/lambda/scanner/Dockerfile
       args:
         AWS_ACCESS_KEY_ID: ${QT_AWS_ACCESS_KEY_ID}
         AWS_SECRET_ACCESS_KEY: ${QT_AWS_SECRET_ACCESS_KEY}
         BUCKET_NAME: qumitoru-dev
     env_file:
-      ./docker/scanner/.env
+      ./docker/lambda/scanner/.env
     ports:
       - "9000:8080"
 volumes:
