@@ -1,0 +1,73 @@
+.scoreDataListFrame {
+  &__qcontent {
+    width: 80% !important;
+    max-width: 900px !important;
+    margin: 0 auto !important;
+    padding: 1%;
+    color: darkgreen !important;
+    &__title {
+      text-align: left !important;
+      padding: 0 1% !important;
+      font-size: 14px !important;
+      font-weight: bold;
+    }
+  }
+  .capturedImage {
+    width: 25px;
+  }
+  .score-data-list {
+    width: 80% !important;
+    max-width: 900px !important;
+    margin: 0 auto !important;
+    margin-top: 30px !important;
+  }
+  .vm--modal {
+    top: 5% !important;
+    height: 86% !important;
+    width: 80% !important;
+    max-width: 600px !important;
+    padding-top: 2% !important;
+    color: darkgreen !important;
+  }
+  .vm--modal img {
+    width: 65%;
+    max-width: 300px;
+  }
+  .img-frame__title {
+    padding-left: 5%;
+    font-weight: bold;
+  }
+  .img-frame__chip {
+    height: 100% !important;
+    margin: 0 auto !important;
+    display: block !important;
+    width: 70% !important;
+    margin-top: 3% !important;
+  }
+  .img-frame__chip .v-chip__content {
+    display: block !important;
+    margin: 0 auto !important;
+    padding: 1% !important;
+    text-align: center !important;
+  }
+  .loading-frame {
+    margin-top: 100px !important;
+  }
+  .page-loading {
+    width: 130px !important;
+    height: 130px !important;
+  }
+  .loading {
+    width: 30px !important;
+    height: 30px !important;
+  }
+  .scoreDataPageNation {
+    margin-top: 30px !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .scoreDataListFrame {
+    display: none;
+  }
+}
