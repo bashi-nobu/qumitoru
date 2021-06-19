@@ -39,23 +39,17 @@ def requestToOcrLambdaProductionEnvVersion(req_data):
     return isFinished, res
 
 def requestToOcrLambdaLocalEnvVersion(req_data):
-    url = 'http://172.17.0.1:9020/2015-03-31/functions/function/invocations'
-    r = requests.post(url, data=json.dumps(req_data), verify=False)
-    if len(r.text) == 0 or r.status_code != requests.codes.ok:
-        isFinished = False
-        for i in range(0, 5):
-            print('retry---')
-            r = requests.post(url, data=json.dumps(req_data), verify=False)
-            time.sleep(1)
-            if len(r.text) == 0 or r.status_code != requests.codes.ok:
-                isFinished = True
-                break
-    else:
-        isFinished = True
+    lambda_ports = [9020, 9030]
+    isFinished = False
+    for port in lambda_ports:
+        url = 'http://172.17.0.1:'+str(port)+'/2015-03-31/functions/function/invocations'
+        r = requests.post(url, data=json.dumps(req_data), verify=False)
+        if len(r.text) > 0 and r.status_code == requests.codes.ok:
+            isFinished = True
+            break
     return isFinished, json.loads(r.text)
 
 def predictScore(req_data):
     isFinished, res = requestToOcrLambda(req_data)
-    print(res)
     score = res['score'] if isFinished else None
     return score

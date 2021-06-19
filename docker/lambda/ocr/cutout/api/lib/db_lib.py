@@ -25,6 +25,6 @@ def saveOcrResult(scores, target_record_id):
         scores.append(-1)
     mysql_connection = connectDB()
     with mysql_connection.cursor() as cursor:
-        sql = "UPDATE questionnaire_questionarescore SET q1=%s,q2=%s,q3=%s,q4=%s,q5=%s,q6=%s,q7=%s,q8=%s,q9=%s WHERE id=%s"
-        cursor.execute(sql,(scores[0],scores[1],scores[2],scores[3],scores[4],scores[5],scores[6],scores[7],scores[8],target_record_id))
+        sql = "UPDATE questionnaire_questionarescore SET q1=%s,q2=%s,q3=%s,q4=%s,q5=%s,q6=%s,q7=%s,q8=%s,q9=%s,is_finished=%s WHERE id=%s"
+        cursor.execute(sql,(scores[0],scores[1],scores[2],scores[3],scores[4],scores[5],scores[6],scores[7],scores[8],True,target_record_id))
         mysql_connection.commit()
