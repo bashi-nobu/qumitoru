@@ -1,12 +1,8 @@
-from django.shortcuts import render, get_object_or_404
 from rest_framework.permissions import AllowAny
 from rest_framework.viewsets import ModelViewSet
-from rest_framework.decorators import action
-from django.http.response import HttpResponse
 from .models import QuestionareScore
 from .serializers import QuestionareScoreSerializer
 from .paginations import CustomPagination
-from django.http import JsonResponse
 
 import datetime
 
