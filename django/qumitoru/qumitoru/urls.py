@@ -22,4 +22,5 @@ urlpatterns = [
     path('auth/', obtain_jwt_token, name='auth'),
     path('admin/', admin.site.urls),
     path('uploader/', include(('uploader.urls','uploader'),)),
+    path('questionnaire/', include(('questionnaire.urls','questionnaire'),)),
 ]
