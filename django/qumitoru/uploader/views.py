@@ -16,7 +16,7 @@ AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
 AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
 IMAGE_SCAN_API_URL = os.environ['IMAGE_SCAN_API_URL']
 BUCKET_NAME = os.environ['BUCKET_NAME']
-DJG_ENV = os.environ['DJANGO_SETTINGS_MODULE']
+
 
 class UploadFile(APIView):
     permission_classes = [AllowAny]
@@ -32,7 +32,6 @@ class UploadFile(APIView):
                 reading_result = self.request_read_file(file_path)
                 if reading_result == 'success':
                     uploaded_imgs = self.uploadedImgData(user_id)
-                    self.delete_file_in_test_env(file_path)
                     return JsonResponse({'result': 'SUCCESS', 'uploadFilesCount': self.uploadedImgsCount(uploaded_imgs)})
                 else:
                     default_storage.delete(file_path)
@@ -82,10 +81,6 @@ class UploadFile(APIView):
             result = 'error'
         return result
 
-    def delete_file_in_test_env(self, file_path):
-        if DJG_ENV == 'qumitoru.settings.test':
-            default_storage.delete(file_path)
-
     def uploadedImgData(self, user_id):
         session = Session(aws_access_key_id=AWS_ACCESS_KEY_ID, aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
         s3 = session.resource('s3')
@@ -121,7 +116,7 @@ class UploadFile(APIView):
         questionareScores = []
         for file in file_path_list:
             questionareScore = QuestionareScore(
-              questionare_id=active_questionare.id,
+              questionare_id= active_questionare.id,
               file_path=file,
               take_at=take_at,
               day_of_week=take_at.weekday(),

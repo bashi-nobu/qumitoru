@@ -48,14 +48,37 @@ services:
     container_name: jsonserver
     ports:
       - "33000:33000"
-  lambda:
+  lambda-scanner:
     container_name:
       qumitoru-lambda-scanner
     build:
       context: .
-      dockerfile: ./docker/scanner/Dockerfile
-    tty: true
+      dockerfile: ./docker/lambda/scanner/Dockerfile
     ports:
       - "9000:8080"
+  lambda-ocr-cutout:
+    container_name:
+      qumitoru-lambda-ocr-cutout
+    build:
+      context: .
+      dockerfile: ./docker/lambda/ocr/cutout/Dockerfile
+    ports:
+      - "9010:8080"
+  lambda-ocr-predict1:
+    container_name:
+      qumitoru-lambda-ocr-predict1
+    build:
+      context: .
+      dockerfile: ./docker/lambda/ocr/predict/Dockerfile
+    ports:
+      - "9020:8080"
+  lambda-ocr-predict2:
+    container_name:
+      qumitoru-lambda-ocr-predict2
+    build:
+      context: .
+      dockerfile: ./docker/lambda/ocr/predict/Dockerfile
+    ports:
+      - "9030:8080"
 volumes:
   mysqldata:
