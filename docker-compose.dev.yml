@@ -60,18 +60,57 @@ services:
     container_name: jsonserver
     ports:
       - "33000:33000"
-  lambda:
+  lambda-scanner:
     container_name:
       qumitoru-lambda-scanner
     build:
       context: .
-      dockerfile: ./docker/scanner/Dockerfile
+      dockerfile: ./docker/lambda/scanner/Dockerfile
       args:
         AWS_ACCESS_KEY_ID: ${QT_AWS_ACCESS_KEY_ID}
         AWS_SECRET_ACCESS_KEY: ${QT_AWS_SECRET_ACCESS_KEY}
+        BUCKET_NAME: qumitoru-dev
     env_file:
-      ./docker/scanner/.env
+      ./docker/lambda/scanner/.env
     ports:
       - "9000:8080"
+  lambda-ocr-cutout:
+    container_name:
+      qumitoru-lambda-ocr-cutout
+    build:
+      context: .
+      dockerfile: ./docker/lambda/ocr/cutout/Dockerfile
+      args:
+        AWS_ACCESS_KEY_ID: ${QT_AWS_ACCESS_KEY_ID}
+        AWS_SECRET_ACCESS_KEY: ${QT_AWS_SECRET_ACCESS_KEY}
+        BUCKET_NAME: qumitoru-dev
+    env_file:
+      ./docker/lambda/scanner/.env
+    ports:
+      - "9010:8080"
+  lambda-ocr-predict:
+    container_name:
+      qumitoru-lambda-ocr-predict1
+    build:
+      context: .
+      dockerfile: ./docker/lambda/ocr/predict/Dockerfile
+      args:
+        AWS_ACCESS_KEY_ID: ${QT_AWS_ACCESS_KEY_ID}
+        AWS_SECRET_ACCESS_KEY: ${QT_AWS_SECRET_ACCESS_KEY}
+        BUCKET_NAME: qumitoru-dev
+    ports:
+      - "9020:8080"
+  lambda-ocr-predict:
+    container_name:
+      qumitoru-lambda-ocr-predict2
+    build:
+      context: .
+      dockerfile: ./docker/lambda/ocr/predict/Dockerfile
+      args:
+        AWS_ACCESS_KEY_ID: ${QT_AWS_ACCESS_KEY_ID}
+        AWS_SECRET_ACCESS_KEY: ${QT_AWS_SECRET_ACCESS_KEY}
+        BUCKET_NAME: qumitoru-dev
+    ports:
+      - "9030:8080"
 volumes:
   mysqldata:

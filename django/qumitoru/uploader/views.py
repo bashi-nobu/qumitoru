@@ -5,6 +5,8 @@ import requests
 from rest_framework.views import APIView
 from django.core.files.storage import default_storage
 from django.http import JsonResponse
+from questionnaire.models import QuestionareScore, Questionare
+from account.models import User
 
 import boto3
 from boto3.session import Session
@@ -15,6 +17,7 @@ AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
 IMAGE_SCAN_API_URL = os.environ['IMAGE_SCAN_API_URL']
 BUCKET_NAME = os.environ['BUCKET_NAME']
 
+
 class UploadFile(APIView):
     permission_classes = [AllowAny]
 
@@ -22,7 +25,7 @@ class UploadFile(APIView):
         try:
             file = request.FILES['file']
             user_id = str(request.POST.get('user_id'))
-            if user_id != 'None':
+            if user_id != 'None' and self.is_validuser(user_id):
                 dt_now = datetime.datetime.now()
                 file_path = user_id + '/tmp/img_'+ dt_now.strftime('%Y_%m_%d_%H_%M_%S') +'.jpg'
                 default_storage.save(file_path, file) # ファイル保存
@@ -45,9 +48,26 @@ class UploadFile(APIView):
         responseData = {'count': uploaded_img_count}
         return JsonResponse(responseData)
 
+    def put(self, request, *args, **kwargs):
+        user_id = str(request.POST.get('user_id'))
+        take_at = self.convertStrDate(str(request.POST.get('take_at')))
+        # move from tmp dir to new dir
+        file_path_list = self.copyImgFromTmpToCalculateDir(user_id, request.POST.get('take_at'))
+        active_questionare = Questionare.objects.filter(is_active=1, user=user_id).first()
+        # save db
+        self.insertQuestionareData(user_id, take_at, active_questionare, file_path_list)
+        return JsonResponse({'result': 'SUCCESS'})
+
     """
     modules
     """
+    def is_validuser(self, user_id):
+        is_valid = False
+        user_quesryset = User.objects.filter(pk=user_id).first()
+        if user_quesryset is not None:
+            is_valid = True
+        return is_valid
+
     def request_read_file(self, file_path):
         json_data = json.dumps({"file_path": file_path})
         url = IMAGE_SCAN_API_URL
@@ -91,4 +111,17 @@ class UploadFile(APIView):
         take_at = [int(i) for i in take_at.split('-')]
         take_at = datetime.date(take_at[0], take_at[1], take_at[2])
         return take_at
+
+    def insertQuestionareData(self, user_id, take_at, active_questionare, file_path_list):
+        questionareScores = []
+        for file in file_path_list:
+            questionareScore = QuestionareScore(
+              questionare_id= active_questionare.id,
+              file_path=file,
+              take_at=take_at,
+              day_of_week=take_at.weekday(),
+              user_id=user_id
+            )
+            questionareScores.append(questionareScore)
+        QuestionareScore.objects.bulk_create(questionareScores)
 
