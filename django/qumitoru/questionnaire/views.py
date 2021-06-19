@@ -14,9 +14,6 @@ class QuestionareScoreViewSet(ModelViewSet):
     queryset = QuestionareScore.objects.all()
     permission_classes = [AllowAny]
 
-    def get_object(self):
-        return get_object_or_404(QuestionareScore, user_id=self.request.query_params.get("user_id"))
-
     def get_queryset(self):
         user_id = self.request.query_params.get("userid")
         period = self.makePeriodList(self.request)
