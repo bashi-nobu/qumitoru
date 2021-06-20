@@ -46,6 +46,17 @@ server.put("/upload", (req, resp) => {
   resp.status(200).json({ result: "SUCCESS",  uploadFilesCount: "0"});
 });
 
+server.get("/questionnare1", (req, resp) => {
+  if(!req.query['periodEnd']){
+    resp.status(200).json(db.questionnare[2]);
+  }else{
+    resp.status(200).json(db.questionnare[0]);
+  }
+});
+server.get("/questionnare2", (req, resp) => {
+  resp.status(200).json(db.questionnare[1]);
+});
+
 server.use(router);
 server.listen(33000, () => {
   console.log('JSON Server is running');

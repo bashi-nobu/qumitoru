@@ -88,7 +88,7 @@ services:
       ./docker/lambda/scanner/.env
     ports:
       - "9010:8080"
-  lambda-ocr-predict:
+  lambda-ocr-predict1:
     container_name:
       qumitoru-lambda-ocr-predict1
     build:
@@ -100,7 +100,7 @@ services:
         BUCKET_NAME: qumitoru-dev
     ports:
       - "9020:8080"
-  lambda-ocr-predict:
+  lambda-ocr-predict2:
     container_name:
       qumitoru-lambda-ocr-predict2
     build:
