@@ -1,0 +1,20 @@
+.mainTitle {
+  width: 200px !important;
+  border-left: 5px solid coral !important;
+  margin-bottom: 30px !important;
+  .v-card__title {
+    text-align: left !important;
+    padding: 0 !important;
+    padding-left: 5% !important;
+    font-weight: bold !important;
+    color: coral !important;
+  }
+}
+.loading {
+  width: 180px !important;
+  height: 180px !important;
+  margin-top: 100px !important;
+}
+.no-data {
+  color: gray;
+}
