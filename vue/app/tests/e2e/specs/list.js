@@ -11,15 +11,12 @@ module.exports = {
       // 1秒待つ
       .pause(3000)
       // アップロード画面へ移動
-      .saveScreenshot('./screenshots/screenshot_list1.png')
       .click('a[href="/list"]')
       // 1秒待つ
       .pause(1000)
       .useXpath()
-      .saveScreenshot('./screenshots/screenshot_list.png')
       .assert.elementCount('.v-data-table__wrapper table tbody tr', 10)
       .click('//button[contains(@aria-label, "Next page")]')
-      .saveScreenshot('./screenshots/screenshot_list.png')
       .assert.elementCount('.v-data-table__wrapper table tbody tr', 1)
       .end();
   },
@@ -34,12 +31,10 @@ module.exports = {
       // 1秒待つ
       .pause(3000)
       // 集計一覧画面へ移動
-      .saveScreenshot('./screenshots/screenshot_list1.png')
       .click('a[href="/list"]')
       // 1秒待つ
       .pause(1000)
       .useXpath()
-      // .saveScreenshot('./screenshots/screenshot_list.png')
       .assert.elementCount('.v-data-table__wrapper table tbody tr', 10)
       .click('//div[contains(@class, "date-picker-field")]')
       .pause(1000)
@@ -48,6 +43,31 @@ module.exports = {
       .click('//div[contains(@class, "v-date-picker-table--date")]/table/tbody/tr[2]/td[1]/button')
       .pause(5000)
       .assert.elementCount('.v-data-table__wrapper table tbody tr', 2)
+      .end();
+  },
+  'アンケートを編集する': (browser) => {
+    browser
+      .url(browser.launch_url)
+      .useCss()
+      // ログイン
+      .setValue('input[type=text]', 'validuser')
+      .setValue('input[type=password]', 'validpassword')
+      .click('button[type="button"]')
+      // 1秒待つ
+      .pause(1000)
+      // 集計結果一覧画面へ移動
+      .click('a[href="/list"]')
+      .waitForElementVisible('.score-data-list', 1000)
+      // 1秒待つ
+      .pause(1000)
+      .click('.editBtn')
+      .assert.containsText('.img-frame__title', '読み込んだアンケート')
+      .click('.editStartBtn')
+      .click('.v-select__slot')
+      .useXpath()
+      .click('//div[contains(@role, "listbox")]/div[6]')
+      .click('//button[contains(@class, "submitBtn")]')
+      .assert.containsText('//span[contains(@class, "updateResult")]', '更新が完了しました。')
       .end();
   }
 };

@@ -30,6 +30,11 @@
         @input="getList"
         class="scoreDataPageNation"
       ></v-pagination>
+      <ScoreEditModal
+        ref="scoreEditModal"
+        @updateScoreDataList='updateScoreDataList'
+      >
+      </ScoreEditModal>
     </div>
   </div>
 </template>
@@ -39,6 +44,7 @@ import axios from 'axios'
 import { VueLoading } from 'vue-loading-template'
 import Questionnaire from '../components/questionnaire.vue'
 import AggregationPeriod from '../components/aggregationPeriod.vue'
+import ScoreEditModal from '../components/scoreEditModal.vue'
 
 export default {
   name: 'List',
@@ -96,9 +102,13 @@ export default {
   components: {
     VueLoading,
     Questionnaire,
-    AggregationPeriod
+    AggregationPeriod,
+    ScoreEditModal
   },
   methods: {
+    openModal(img) {
+      this.$refs.scoreEditModal.openModal(img, this.dataList)
+    },
     getImgFromS3(img_path) {
       if(process.env.NODE_ENV === 'development'){
         return "https://qumitoru-dev.s3-ap-northeast-1.amazonaws.com/" + img_path
@@ -193,6 +203,19 @@ export default {
       let defaultDateRangeMin = dt.toISOString().substr(0, 10);
       let defaultDateRangeMax = new Date().toISOString().substr(0, 10);
       this.dates = [defaultDateRangeMin, defaultDateRangeMax];
+    },
+    updateScoreDataList(id, scoreList) {
+      for(let data of this.scoreDataList){
+        if(data.id == id){
+          data.q1 = scoreList[0],
+          data.q2 = scoreList[1],
+          data.q3 = scoreList[2],
+          data.q4 = scoreList[3],
+          data.q5 = scoreList[4],
+          data.q6 = scoreList[5],
+          data.q7 = scoreList[6]
+        }
+      }
     }
   }
 }

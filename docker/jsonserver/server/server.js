@@ -56,6 +56,9 @@ server.get("/questionnare1", (req, resp) => {
 server.get("/questionnare2", (req, resp) => {
   resp.status(200).json(db.questionnare[1]);
 });
+server.post("/score_update", (req, resp) => {
+  resp.status(200).json({ result: "SUCCESS" });
+});
 
 server.use(router);
 server.listen(33000, () => {
