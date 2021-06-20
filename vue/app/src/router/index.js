@@ -4,6 +4,7 @@ import Auth from '@/views/Auth'
 import Dashboard from '@/views/Dashboard'
 import Upload from '@/views/Upload'
 import List from '@/views/List'
+import Download from '@/views/Download'
 
 Vue.use(VueRouter)
 
@@ -32,6 +33,12 @@ const routes = [
     component: List,
     meta: { title: "集計結果一覧 | qumitoru", requiresAuth: true }
   },
+  {
+    path: '/download',
+    name: 'Download',
+    component: Download,
+    meta: { title: "ダウンロード | qumitoru", requiresAuth: true },
+  }
 ]
 
 const router = new VueRouter({
