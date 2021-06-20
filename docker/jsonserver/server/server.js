@@ -60,6 +60,14 @@ server.post("/score_update", (req, resp) => {
   resp.status(200).json({ result: "SUCCESS" });
 });
 
+server.get("/make_dashboard_data", (req, resp, next) => {
+  if(!req.query['periodEnd']){
+    resp.status(200).json(db.make_dashboard_data[1]);
+  }else{
+    resp.status(200).json(db.make_dashboard_data[0]);
+  }
+});
+
 server.use(router);
 server.listen(33000, () => {
   console.log('JSON Server is running');
