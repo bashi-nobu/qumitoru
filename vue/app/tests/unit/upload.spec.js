@@ -12,13 +12,7 @@ const $session = {
 }
 
 describe('Upload.vue', () => {
-
-  it('ログインしていない場合はアンケート画像アップロード画面が表示されない', () => {
-    const wrapper = shallowMount(Upload)
-    expect(wrapper.find('.upload-form').exists()).toBeTruthy()
-  })
-
-  it('ログイン済みの場合はアンケート画像のアップロードフォームが表示される', () => {
+  it('アンケート画像のアップロードフォームが表示される', () => {
     const wrapper = shallowMount(Upload, {
       mocks: {
         $session
