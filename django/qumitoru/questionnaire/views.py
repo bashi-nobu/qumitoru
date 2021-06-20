@@ -50,7 +50,6 @@ class QuestionareScoreViewSet(ModelViewSet):
             category_names, question_name_list, c_q_column_name_list, c_q_index_list = self.getQuestionareData(activeQuestionnare)
             categoryAveList = self.calcScoreAverage(question_name_list, c_q_column_name_list, scoreDataDf)
             dailyScoreData = self.makeDailyScoreData(scoreDataDf, c_q_column_name_list, category_names)
-            print(categoryAveList)
             return JsonResponse({'categoryAveList': categoryAveList, 'dailyScoreData': dailyScoreData})
         else:
             return JsonResponse({'categoryAveList': [0,0,0,0,0,0], 'dailyScoreData': []})
@@ -107,9 +106,8 @@ class QuestionareScoreViewSet(ModelViewSet):
 
     def calcScoreAverage(self, question_name_list, c_q_column_name_list, scoreDataDf):
         categoryAveList = []
-        scoreDataDf = scoreDataDf[scoreDataDf[1:len(question_name_list)] != -1]
+        scoreDataDf = scoreDataDf[scoreDataDf[0:len(question_name_list)] != -1]
         for c in c_q_column_name_list:
-            print(scoreDataDf[c].values)
             mean_val = np.nanmean(scoreDataDf[c].values.flatten())
             categoryAveList.append(float(Decimal(mean_val).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)))
         return categoryAveList
