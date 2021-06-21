@@ -51,6 +51,7 @@ class QuestionareScoreListTests(APITestCase):
         QuestionareScore.objects.create(q1=8,q2=8,q3=5,q4=4,q5=4,q6=4,q7=4,day_of_week=1,is_finished=True,take_at=datetime.date.today(),user_id=q.user.id,questionare_id=q.id)
         url = reverse('questionnaire:questionarescore-make-dashboard-data', kwargs=dict(pk=u'1'))
         resp = self.client.get(url, {'userid': q.user.id, 'periodStart': datetime.date.today().strftime('%Y-%m-%d')}, format='json')
+        take_at_date = datetime.date.today().strftime('%m-%d')
         self.assertEqual(resp.status_code, status.HTTP_200_OK)
         self.assertEqual(json.loads(resp.content)['categoryAveList'], [9.0, 9.0, 5.0, 4.0, 4.0, 4.0, 4.0])
         self.assertEqual(
@@ -58,35 +59,35 @@ class QuestionareScoreListTests(APITestCase):
           [
             [
               ['take_at', 'category_0'],
-              ['06-20', 9.0]
+              [take_at_date, 9.0]
             ],
             [
               ['take_at', 'category_1'],
-              ['06-20', 9.0]
+              [take_at_date, 9.0]
             ],
             [
               ['take_at', 'category_2'],
-              ['06-20', 5.0]
+              [take_at_date, 5.0]
             ],
             [
               ['take_at', 'category_3'],
-              ['06-20', 4.0]
+              [take_at_date, 4.0]
             ],
             [
               ['take_at', 'category_4'],
-              ['06-20', 4.0]
+              [take_at_date, 4.0]
             ],
             [
               ['take_at', 'category_5'],
-              ['06-20', 4.0]
+              [take_at_date, 4.0]
             ],
             [
               ['take_at', 'category_6'],
-              ['06-20', 4.0]
+              [take_at_date, 4.0]
             ],
             [
               ['take_at', 'take_at'],
-              ['06-20', '06-20']
+              [take_at_date, take_at_date]
             ]
           ]
         )
