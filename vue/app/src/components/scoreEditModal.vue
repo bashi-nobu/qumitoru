@@ -95,13 +95,13 @@ export default {
         return date.toLocaleString();
       },
       getQuestionnareUpdateApiUrl: function() {
-        let url;
+        let url, currentPort = window.location.port, currentHost= window.location.host;
         if(process.env.NODE_ENV === 'development'){
           url = 'http://0.0.0.0:8001/questionnaire/questionnaire/'+ this.$session.get("userid") +'/score_update/'
-        }else if(window.location.port === '8081'){ // testing
+        }else if(currentPort === '8081'){ // testing
           url = 'http://172.17.0.1:33000/score_update'
-        }else if(process.env.NODE_ENV === 'production'){
-          url = 'http://0.0.0.0:1337/questionnaire/questionnaire/'+ this.$session.get("userid") +'/score_update/'
+        }else{
+          url = 'http://'+currentHost+'/questionnaire/questionnaire/'+ this.$session.get("userid") +'/score_update/'
         }
         return url;
       }
@@ -171,8 +171,7 @@ export default {
       formData.append('target_id', this.targetId);
       let config = {
         headers: {
-          'content-type': 'multipart/form-data',
-          'Access-Control-Allow-Origin': 'http://localhost:8080'
+          'content-type': 'multipart/form-data'
         }
       };
       let url = this.getQuestionnareUpdateApiUrl();
@@ -182,7 +181,6 @@ export default {
           this.isLoading = false;
           if(response.data.result == 'SUCCESS'){
             this.updateEditScoreData(this.targetId, this.scoreList, this.dataList);
-            // this.updateEditScoreData(this.targetId, this.scoreList, this.scoreDataList)
             this.$emit('updateScoreDataList', this.targetId, this.scoreList);
             this.updateResult = '更新が完了しました。'
           }else{

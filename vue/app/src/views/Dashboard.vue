@@ -99,13 +99,13 @@ export default {
       },
       result: null,
       getDashBoardApiUrl: function() {
-        let url;
+        let url, currentPort = window.location.port, currentHost= window.location.host;
         if(process.env.NODE_ENV === 'development'){
           url = 'http://0.0.0.0:8001/questionnaire/questionnaire/'+this.$session.get("userid")+'/make_dashboard_data/'
-        }else if(process.env.NODE_ENV === 'test' || window.location.port === '8081'){ // testing
+        }else if(currentPort === '8081'){ // testing
           url = 'http://172.17.0.1:33000/make_dashboard_data'
-        }else if(process.env.NODE_ENV === 'production'){
-          url = 'http://0.0.0.0:1337/questionnaire/questionnaire/'+this.$session.get("userid")+'/make_dashboard_data/'
+        }else{
+          url = 'http://'+currentHost+'/questionnaire/questionnaire/'+this.$session.get("userid")+'/make_dashboard_data/'
         }
         return url;
       },
@@ -120,8 +120,7 @@ export default {
       if(this.dates.length == 0){this.setDefaultDate()}
       let config = {
         headers: {
-          'content-type': 'multipart/form-data',
-          'Access-Control-Allow-Origin': 'http://localhost:8080'
+          'content-type': 'multipart/form-data'
         },
         params: {
           periodStart: this.dates[0],
