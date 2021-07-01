@@ -22,6 +22,9 @@ RUN mkdir /var/www
 RUN mkdir /var/www/static
 RUN mkdir /var/www/html
 
+ARG VUE_APP_API_ENDPOINT
+ENV VUE_APP_API_ENDPOINT=${VUE_APP_API_ENDPOINT}
+
 ADD ./docker/nginx/nginx.conf /etc/nginx/nginx.conf
 ADD ./docker/nginx/default.conf /etc/nginx/sites-available/default
 ADD ./docker/nginx/default.conf /etc/nginx/sites-enabled/default

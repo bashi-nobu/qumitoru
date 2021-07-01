@@ -70,16 +70,21 @@ class UploadFile(APIView):
 
     def request_read_file(self, file_path):
         json_data = json.dumps({"file_path": file_path})
-        url = IMAGE_SCAN_API_URL
-        headers = {"Content-Type" : "application/json"}
+        headers = {"Content-Type" : "application/json", "x-api-key": self.get_scanner_api_key()}
         try:
-            response = requests.post(url, headers=headers, data=json_data, verify=False)
-            res_body = json.loads(response.text)['body']
-            result = json.loads(res_body)['reading_result']
+            response = requests.post(IMAGE_SCAN_API_URL, headers=headers, data=json_data, verify=False)
+            res_body = json.loads(response.text)
+            if 'body' in res_body:
+                res_body = json.loads(res_body['body'])
+            result = res_body['reading_result']
         except Exception as e:
             print(e)
             result = 'error'
         return result
+
+    def get_scanner_api_key(self):
+        api_key = os.environ['IMAGE_SCAN_API_KEY'] if os.environ.get('IMAGE_SCAN_API_KEY') else '-'
+        return api_key
 
     def uploadedImgData(self, user_id):
         session = Session(aws_access_key_id=AWS_ACCESS_KEY_ID, aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
@@ -123,5 +128,7 @@ class UploadFile(APIView):
               user_id=user_id
             )
             questionareScores.append(questionareScore)
+        for q in questionareScores:
+            print(q)
         QuestionareScore.objects.bulk_create(questionareScores)
 
