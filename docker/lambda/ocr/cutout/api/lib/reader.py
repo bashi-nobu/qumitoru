@@ -203,12 +203,10 @@ class ImgReader:
         img = cv2.imread(downloaded_file_path)
         compressed_img = self.img_encode(img)
         compressed_img = cv2.resize(compressed_img, dsize=None, fx=0.25, fy=0.25)
-        cv2.imwrite('compressed_img.jpg', compressed_img)
+        cv2.imwrite('/tmp/compressed_img.jpg', compressed_img)
         s3 = boto3.resource('s3')
         bucket = s3.Bucket(bucket_name)
-        bucket.upload_file('compressed_img.jpg', s3_file_path, ExtraArgs={'ACL': 'public-read'})
-        os.remove(downloaded_file_path)
-        os.remove('compressed_img.jpg')
+        bucket.upload_file('/tmp/compressed_img.jpg', s3_file_path, ExtraArgs={'ACL': 'public-read'})
 
     def img_encode(self, img):
         encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), Quality]
