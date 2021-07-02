@@ -149,7 +149,8 @@ JWT_AUTH = {
 
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:8080',
-    'http://localhost:8081'
+    'http://localhost:8081',
+    'http://localhost:80'
 ]
 
 CORS_ALLOW_HEADERS = [

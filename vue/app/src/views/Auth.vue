@@ -1,5 +1,5 @@
 <template>
-  <v-container grid-list-md justify-content-center style="height: 100%;">
+  <v-container grid-list-md justify-content-center class="auth-frame">
     <v-layout row wrap align-center justify-center fill-height>
       <v-flex xs12 sm8 lg4 md5>
         <v-card class="login-card">
@@ -84,13 +84,13 @@ export default {
       ]
     },
     getApiUrl: function() {
-      let url;
+      let url, currentPort = window.location.port, currentHort= window.location.host;
       if(process.env.NODE_ENV === 'development'){
         url = 'http://0.0.0.0:8001/auth/'
-      }else if(window.location.port === '8081'){ // testing
+      }else if(currentPort === '8081'){ // testing
         url = 'http://172.17.0.1:33000/auth'
-      }else if(process.env.NODE_ENV === 'production'){
-        url = 'http://127.0.0.1:8001/auth/'
+      }else{
+        url = 'http://'+currentHort+'/auth/'
       }
       return url;
     }

@@ -51,24 +51,24 @@ export default {
       date: new Date().toISOString().substr(0, 10),
       menu: false,
       getUploadedFileCountApiUrl: function() {
-        let url;
+        let url, currentPort = window.location.port, currentHost= window.location.host;
         if(process.env.NODE_ENV === 'development'){
           url = 'http://0.0.0.0:8001/uploader/v1/upload/'
-        }else if(window.location.port === '8081'){ // testing
+        }else if(currentPort === '8081'){ // testing
           url = 'http://172.17.0.1:33000/uploaded_file_count'
-        }else if(process.env.NODE_ENV === 'production'){
-          url = 'http://127.0.0.1:8001/uploader/v1/upload/'
+        }else{
+          url = 'http://'+currentHost+'/uploader/v1/upload/'
         }
         return url;
       },
       getUploadApiUrl: function() {
-        let url;
+        let url, currentPort = window.location.port, currentHost= window.location.host;
         if(process.env.NODE_ENV === 'development'){
           url = 'http://0.0.0.0:8001/uploader/v1/upload/'
-        }else if(window.location.port === '8081'){ // testing
+        }else if(currentPort === '8081'){ // testing
           url = 'http://172.17.0.1:33000/upload'
-        }else if(process.env.NODE_ENV === 'production'){
-          url = 'http://0.0.0.0:1337/uploader/v1/upload/'
+        }else{
+          url = 'http://'+currentHost+'/uploader/v1/upload/'
         }
         return url;
       }
@@ -83,14 +83,8 @@ export default {
   },
   methods: {
     getUploadedFileCount (){
-      let config = {
-        headers: {
-          'content-type': 'multipart/form-data',
-          'Access-Control-Allow-Origin': 'http://localhost:8080'
-        }
-      };
       let url = this.getUploadedFileCountApiUrl();
-      axios.get(url + '?id='+this.$session.get("userid"), config)
+      axios.get(url + '?id='+this.$session.get("userid"))
       .then(function(response){
         this.uploadFilesCount = response.data.count
       }.bind(this))
@@ -111,7 +105,7 @@ export default {
         let config = {
           headers: {
             'content-type': 'multipart/form-data',
-            'Access-Control-Allow-Origin': 'http://localhost:8080'
+            'Access-Control-Allow-Origin': 'http://'+window.location.host
           }
         };
         axios.post(url, formData, config)

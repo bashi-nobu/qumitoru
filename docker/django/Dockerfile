@@ -20,3 +20,4 @@ COPY ./docker/django/requirements.txt $APP_ROOT/requirements.txt
 RUN pip install -r $APP_ROOT/requirements.txt
 
 COPY ./django/qumitoru $APP_ROOT
+RUN chmod +x ./start.sh;

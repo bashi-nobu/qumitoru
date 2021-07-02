@@ -83,14 +83,14 @@ export default {
         return date.toLocaleString();
       },
       getListApiUrl: function(number) {
-        let url;
+        let url, currentPort = window.location.port, currentHost= window.location.host;
         let pageNum = number ? number : 1;
         if(process.env.NODE_ENV === 'development'){
           url = 'http://0.0.0.0:8001/questionnaire/questionnaire/'
-        }else if(process.env.NODE_ENV === 'test' || window.location.port === '8081'){ // testing
+        }else if(currentPort === '8081'){ // testing
           url = 'http://172.17.0.1:33000/questionnare'+pageNum
-        }else if(process.env.NODE_ENV === 'production'){
-          url = 'http://0.0.0.0:1337/questionnaire/questionnaire/'
+        }else{
+          url = 'http://'+currentHost+'/questionnaire/questionnaire/'
         }
         return url;
       }
@@ -121,10 +121,6 @@ export default {
       if(this.dates.length == 0){ this.setDefaultDate() }
       let pageNum = number ? number : 1;
       let config = {
-        headers: {
-          'content-type': 'multipart/form-data',
-          'Access-Control-Allow-Origin': 'http://localhost:8080'
-        },
         params: {
           periodStart: this.dates[0],
           periodEnd: this.dates[1],
@@ -168,8 +164,7 @@ export default {
       formData.append('target_id', this.targetId);
       let config = {
         headers: {
-          'content-type': 'multipart/form-data',
-          'Access-Control-Allow-Origin': 'http://localhost:8080'
+          'content-type': 'multipart/form-data'
         }
       };
       let url = this.getQuestionnareUpdateApiUrl();

@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-btn class="startAggregateBtn" text v-on:click="show">集計を開始する</v-btn>
-    <modal name="aggregate-modal">
+    <modal name="aggregate-modal" class="aggregate-modal">
       <div class="modal-header">
         <h2>アンケート実施日を入力してください</h2>
       </div>
@@ -13,6 +13,7 @@
             :close-on-content-click="false"
             transition="scale-transition"
             offset-y
+            persistent
             min-width="auto"
           >
             <template v-slot:activator="{ on, attrs }">
@@ -39,7 +40,7 @@
           <v-btn class="startAggregateConfirmBtn" text v-on:click="aggregate">集計を開始する</v-btn>
         </div>
         <div v-else>
-          <vue-loading type="spin" color="coral" class="loading"></vue-loading>
+          <vue-loading type="spin" color="coral" class="aggregate_loading"></vue-loading>
         </div>
       </div>
     </modal>
@@ -61,13 +62,13 @@ export default {
       date: new Date().toISOString().substr(0, 10),
       menu: false,
       getAggregateApiUrl: function() {
-        let url;
+        let url, currentPort = window.location.port, currentHost= window.location.host;
         if(process.env.NODE_ENV === 'development'){
           url = 'http://0.0.0.0:8001/uploader/v1/upload/'
-        }else if(window.location.port === '8081'){ // testing
+        }else if(currentPort === '8081'){ // testing
           url = 'http://172.17.0.1:33000/upload'
-        }else if(process.env.NODE_ENV === 'production'){
-          url = 'http://0.0.0.0:1337/uploader/v1/upload/'
+        }else{
+          url = 'http://'+currentHost+'/uploader/v1/upload/'
         }
         return url;
       }
@@ -95,8 +96,7 @@ export default {
       formData.append('take_at', this.date);
       let config = {
         headers: {
-          'content-type': 'multipart/form-data',
-          'Access-Control-Allow-Origin': 'http://localhost:8080'
+          'content-type': 'multipart/form-data'
         }
       };
       axios.put(url, formData, config)
