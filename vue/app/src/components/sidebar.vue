@@ -28,7 +28,7 @@
       dense
     >
       <v-list-item
-        v-for="list in nav_list.lists"
+        v-for="list in navListFilter"
         :key="list.name"
         :to="list.link"
       >
@@ -56,6 +56,8 @@ export default {
   data() {
     return {
       username: this.$session.get('username'),
+      isSmartPhoneWindowSize: false,
+      spNavMenus: ['/dashboard','/upload','/howto'],
       nav_list:
         {
           lists: [
@@ -93,7 +95,27 @@ export default {
       this.$session.destroy();
       this.$emit('logouted', true);
       router.push("/auth");
+    },
+    checkWindowSize() {
+      this.isSmartPhoneWindowSize = window.innerWidth < 767 ? true: false;
     }
+  },
+  computed: {
+    navListFilter:function() {
+      let filteredList = [];
+      let lists = this.nav_list.lists;
+      for(let i in lists){
+        if(this.isSmartPhoneWindowSize && this.spNavMenus.includes(lists[i].link)){
+          filteredList.push(lists[i]);
+        }else if(!this.isSmartPhoneWindowSize){
+          filteredList.push(lists[i]);
+        }
+      }
+      return filteredList;
+    }
+  },
+  mounted() {
+    this.checkWindowSize();
   }
 }
 </script>
