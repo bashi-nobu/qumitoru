@@ -17,17 +17,22 @@
 </script>
 <style lang="scss">
   .downloadFrame {
-    width: 70%;
+    width: 80%;
     margin: 0 auto;
     margin-top: 20%;
     text-align: center !important;
     .v-card__title {
       display: block;
     }
+    .downloadBtn {
+      background: coral !important;
+      color: white !important;
+      font-weight: bold;
+    }
   }
-  .downloadBtn {
-    background: coral !important;
-    color: white !important;
-    font-weight: bold;
+  @media (max-width: 767px) {
+    .downloadFrame {
+      display: none !important;
+    }
   }
 </style>
