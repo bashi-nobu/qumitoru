@@ -5,6 +5,7 @@ import Dashboard from '@/views/Dashboard'
 import Upload from '@/views/Upload'
 import List from '@/views/List'
 import Download from '@/views/Download'
+import Howto from '@/views/Howto'
 
 Vue.use(VueRouter)
 
@@ -31,13 +32,19 @@ const routes = [
     path: '/list',
     name: 'List',
     component: List,
-    meta: { title: "集計結果一覧 | qumitoru", requiresAuth: true }
+    meta: { title: "集計結果一覧 | qumitoru" }
   },
   {
     path: '/download',
     name: 'Download',
     component: Download,
-    meta: { title: "ダウンロード | qumitoru", requiresAuth: true },
+    meta: { title: "ダウンロード | qumitoru" },
+  },
+  {
+    path: '/howto',
+    name: 'Howto',
+    component: Howto,
+    meta: { title: "使い方 | qumitoru"},
   }
 ]
 
