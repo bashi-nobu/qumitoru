@@ -31,6 +31,7 @@
         v-for="list in navListFilter"
         :key="list.name"
         :to="list.link"
+        :target="list.target"
       >
         <v-list-item-icon>
           <v-icon>{{ list.icon }}</v-icon>
@@ -64,27 +65,32 @@ export default {
             {
               name: "ダッシュボード",
               link: "/dashboard",
-              icon: "mdi-monitor-dashboard"
+              icon: "mdi-monitor-dashboard",
+              target: ""
             },
             {
               name: "アンケートを読み取る",
               link: "/upload",
-              icon: "mdi-magnify-scan"
+              icon: "mdi-magnify-scan",
+              target: ""
             },
             {
               name: "集計一覧",
               link: "/list",
-              icon: "mdi-clipboard-list-outline"
+              icon: "mdi-clipboard-list-outline",
+              target: ""
             },
             {
               name: "ダウンロード",
               link: "/download",
-              icon: "mdi-file-download-outline"
+              icon: "mdi-file-download-outline",
+              target: ""
             },
             {
               name: "使い方",
               link: "/howto",
-              icon: "mdi-account-question-outline"
+              icon: "mdi-account-question-outline",
+              target: "_blank"
             },
           ],
         }

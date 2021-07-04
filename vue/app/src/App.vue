@@ -27,15 +27,17 @@ export default {
 		this.checkLoggedIn();
 	},
 	methods: {
-		checkLoggedIn() {
-			this.$session.start();
-			if (!this.$session.has("token")) {
-				if(this.$route.path !== '/auth'){router.push("/auth").catch(()=>{});}
-			}else{
+    checkLoggedIn() {
+      this.$session.start();
+      if(this.$route.path === '/howto'){
+        router.push("/howto").catch(()=>{});
+      }else if (!this.$session.has("token")) {
+        if(this.$route.path !== '/auth'){router.push("/auth").catch(()=>{});}
+      }else{
         this.isLogin = true;
         if(this.$route.path === '/auth'){router.push("/").catch(()=>{});}
       }
-		},
+    },
     showSidebar() {
       this.isLogin = true;
     },
