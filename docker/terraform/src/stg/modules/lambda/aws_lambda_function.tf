@@ -1,3 +1,5 @@
+# lambda(scanner)_______________________________________________
+
 resource "aws_lambda_function" "lambda_scanner_container" {
   function_name = "lambda_scanner_container_${var.env}"
   role          = var.lambda_container_role_arn
@@ -5,7 +7,7 @@ resource "aws_lambda_function" "lambda_scanner_container" {
   image_uri     = "${var.lambda-scanner-image-url}:latest"
   memory_size   = 3008
 	timeout       = 120
-
+  publish = true
   lifecycle {
     ignore_changes = [image_uri]
   }
@@ -17,6 +19,21 @@ resource "aws_lambda_function" "lambda_scanner_container" {
     }
   }
 }
+
+resource "aws_lambda_alias" "lambda_scanner" {
+  name             = "scanner_alias_${var.env}"
+  description      = "lambda scanner alias"
+  function_name    = aws_lambda_function.lambda_scanner_container.function_name
+  function_version = aws_lambda_function.lambda_scanner_container.version
+}
+
+resource "aws_lambda_provisioned_concurrency_config" "lambda_scanner_container" {
+  function_name                     = aws_lambda_alias.lambda_scanner.function_name
+  provisioned_concurrent_executions = 2
+  qualifier                         = aws_lambda_alias.lambda_scanner.name
+}
+
+# lambda(cutout&predict)_______________________________________________
 
 resource "aws_lambda_function" "lambda_predict_container" {
 	function_name = "lambda_predict_container_${var.env}"
