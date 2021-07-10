@@ -90,7 +90,7 @@ export default {
       }else if(currentPort === '8081'){ // testing
         url = 'http://172.17.0.1:33000/auth'
       }else{
-        url = 'http://'+currentHort+'/auth/'
+        url = 'https://'+currentHort+'/auth/'
       }
       return url;
     }

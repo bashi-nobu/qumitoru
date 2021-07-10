@@ -57,7 +57,7 @@ export default {
         }else if(currentPort === '8081'){ // testing
           url = 'http://172.17.0.1:33000/uploaded_file_count'
         }else{
-          url = 'http://'+currentHost+'/uploader/v1/upload/'
+          url = 'https://'+currentHost+'/uploader/v1/upload/'
         }
         return url;
       },
@@ -68,7 +68,7 @@ export default {
         }else if(currentPort === '8081'){ // testing
           url = 'http://172.17.0.1:33000/upload'
         }else{
-          url = 'http://'+currentHost+'/uploader/v1/upload/'
+          url = 'https://'+currentHost+'/uploader/v1/upload/'
         }
         return url;
       }
