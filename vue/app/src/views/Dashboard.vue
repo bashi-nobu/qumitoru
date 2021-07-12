@@ -105,7 +105,7 @@ export default {
         }else if(currentPort === '8081'){ // testing
           url = 'http://172.17.0.1:33000/make_dashboard_data'
         }else{
-          url = 'http://'+currentHost+'/questionnaire/questionnaire/'+this.$session.get("userid")+'/make_dashboard_data/'
+          url = 'https://'+currentHost+'/questionnaire/questionnaire/'+this.$session.get("userid")+'/make_dashboard_data/'
         }
         return url;
       },

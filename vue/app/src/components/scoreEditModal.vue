@@ -101,7 +101,7 @@ export default {
         }else if(currentPort === '8081'){ // testing
           url = 'http://172.17.0.1:33000/score_update'
         }else{
-          url = 'http://'+currentHost+'/questionnaire/questionnaire/'+ this.$session.get("userid") +'/score_update/'
+          url = 'https://'+currentHost+'/questionnaire/questionnaire/'+ this.$session.get("userid") +'/score_update/'
         }
         return url;
       }
