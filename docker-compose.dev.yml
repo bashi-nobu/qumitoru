@@ -1,0 +1,116 @@
+version: '3'
+
+services:
+  db:
+    image:
+      mysql:latest
+    restart:
+      always
+    container_name:
+      qumitoru-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: test
+      MYSQL_USER: root
+      MYSQL_DATABASE: test
+      MYSQL_PASSWORD: test
+      BIND-ADDRESS: 0.0.0.0
+    ports:
+      - 3307:3307
+    expose:
+      - 3307
+    volumes:
+      - mysqldata:/var/lib/mysql
+      - ./mysql/conf.d:/etc/mysql/conf.d
+  backend:
+    container_name:
+      qumitoru-django
+    build:
+      context: .
+      dockerfile: ./docker/django/Dockerfile
+    env_file:
+      ./docker/django/.env
+    command:
+      python3 manage.py runserver 0.0.0.0:8001
+    volumes:
+      - ./django/qumitoru:/api
+    ports:
+      - "8001:8001"
+    depends_on:
+      - db
+  frontend:
+    container_name:
+      qumitoru-vue
+    build:
+      context: .
+      dockerfile: ./docker/vue/Dockerfile
+    tty: true
+    volumes:
+      - ./vue/app:/app:cached
+    ports:
+      - "8080:8080"
+  jsonserver:
+    build:
+      context: .
+      dockerfile: ./docker/jsonserver/Dockerfile
+    volumes:
+      - ./docker/jsonserver/server:/data/server:delegated
+    tty: true
+    working_dir: /data/server
+    command: sh -c "yarn install && yarn start"
+    container_name: jsonserver
+    ports:
+      - "33000:33000"
+  lambda-scanner:
+    container_name:
+      qumitoru-lambda-scanner
+    build:
+      context: .
+      dockerfile: ./docker/lambda/scanner/Dockerfile
+      args:
+        AWS_ACCESS_KEY_ID: ${QT_AWS_ACCESS_KEY_ID}
+        AWS_SECRET_ACCESS_KEY: ${QT_AWS_SECRET_ACCESS_KEY}
+        BUCKET_NAME: qumitoru-dev
+    env_file:
+      ./docker/lambda/scanner/.env
+    ports:
+      - "9000:8080"
+  lambda-ocr-cutout:
+    container_name:
+      qumitoru-lambda-ocr-cutout
+    build:
+      context: .
+      dockerfile: ./docker/lambda/ocr/cutout/Dockerfile
+      args:
+        AWS_ACCESS_KEY_ID: ${QT_AWS_ACCESS_KEY_ID}
+        AWS_SECRET_ACCESS_KEY: ${QT_AWS_SECRET_ACCESS_KEY}
+        BUCKET_NAME: qumitoru-dev
+    env_file:
+      ./docker/lambda/scanner/.env
+    ports:
+      - "9010:8080"
+  lambda-ocr-predict1:
+    container_name:
+      qumitoru-lambda-ocr-predict1
+    build:
+      context: .
+      dockerfile: ./docker/lambda/ocr/predict/Dockerfile
+      args:
+        AWS_ACCESS_KEY_ID: ${QT_AWS_ACCESS_KEY_ID}
+        AWS_SECRET_ACCESS_KEY: ${QT_AWS_SECRET_ACCESS_KEY}
+        BUCKET_NAME: qumitoru-dev
+    ports:
+      - "9020:8080"
+  lambda-ocr-predict2:
+    container_name:
+      qumitoru-lambda-ocr-predict2
+    build:
+      context: .
+      dockerfile: ./docker/lambda/ocr/predict/Dockerfile
+      args:
+        AWS_ACCESS_KEY_ID: ${QT_AWS_ACCESS_KEY_ID}
+        AWS_SECRET_ACCESS_KEY: ${QT_AWS_SECRET_ACCESS_KEY}
+        BUCKET_NAME: qumitoru-dev
+    ports:
+      - "9030:8080"
+volumes:
+  mysqldata:

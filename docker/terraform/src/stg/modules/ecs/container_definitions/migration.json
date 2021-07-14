@@ -1,0 +1,77 @@
+[
+  {
+    "name": "backend",
+    "dnsSearchDomains": null,
+    "logConfiguration": {
+    "logDriver": "awslogs",
+    "secretOptions": null,
+    "options": {
+      "awslogs-group": "qumitoru-service-${env}",
+      "awslogs-region": "ap-northeast-1",
+      "awslogs-stream-prefix": "ecs"
+    }
+    },
+    "entrypoint": ["./start.sh"],
+    "portMappings": [
+    {
+      "hostPort": 8001,
+      "protocol": "tcp",
+      "containerPort": 8001
+    }
+    ],
+    "command": [
+    ],
+    "linuxParameters": null,
+    "cpu": 0,
+    "environment": [
+      {
+        "name": "BUCKET_NAME",
+        "value": "${bucket_name}"
+      },
+      {
+        "name": "DB_HOST",
+        "value": "${db_host}"
+      },
+      {
+        "name": "DB_NAME",
+        "value": "${db_name}"
+      },
+      {
+        "name": "DB_PASS",
+        "value": "${db_password}"
+      },
+      {
+        "name": "DB_USER",
+        "value": "${db_user}"
+      },
+      {
+        "name": "ALLOWED_HOST",
+        "value": "${lb_dns_name}"
+      }
+    ],
+    "secrets": [
+      {
+        "name": "AWS_ACCESS_KEY_ID",
+        "valueFrom": "QT_AWS_ACCESS_KEY_ID"
+      },
+      {
+        "name": "AWS_SECRET_ACCESS_KEY",
+        "valueFrom": "QT_AWS_SECRET_ACCESS_KEY"
+      },
+      {
+        "name": "DJANGO_SECRET_KEY",
+        "valueFrom": "QT_DJANGO_SECRET_KEY"
+      }
+    ],
+    "resourceRequirements": null,
+    "ulimits": null,
+    "dnsServers": null,
+    "workingDirectory": "/api",
+    "dockerSecurityOptions": null,
+    "memory": 512,
+    "memoryReservation": null,
+    "volumesFrom": [],
+    "stopTimeout": null,
+    "image": "${django-image-url}"
+  }
+]

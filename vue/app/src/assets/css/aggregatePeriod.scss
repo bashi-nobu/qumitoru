@@ -1,0 +1,10 @@
+.selectPeriodFrame {
+  width: 320px !important;
+  margin-left: calc(95% - 320px) !important;
+  .v-main__wrap {
+    display: flex !important;
+  }
+  .date-picker-field {
+    width: 250px !important;
+  }
+}
