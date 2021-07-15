@@ -12,7 +12,7 @@ qumitoru(クミトル)<br><br>
 ## URL
 
 https://qumitoru.net/
-<br><br> ※ アプリケーションの利用にはログインが必須となっておりますので下記のアカウント情報を入力してください。
+<br><br> ※ アプリケーションの利用にはログインが必須となっておりますのでお手数ですが下記のアカウント情報をご入力ください。
 
 ## テスト用アカウント
 
@@ -129,14 +129,14 @@ https://qumitoru.net/
 
 ## ローカル開発環境
 
-### Host Maschine
+### Host Machine
 |  Name  |  Version  |
 | ---- | ---- |
 |  macOS Catalina  |  10.15.7  |
 |  docker  |  18.09.2  |
 |  docker-compose  |  1.29.1  |
 
-### Host Maschine (for ML Prediction Model Generation)
+### Host Machine (for ML Prediction Model Generation)
 |  Name  |  Spec  |
 | ---- | ---- |
 |  OS  |  Windows10 Home 64bit  |
