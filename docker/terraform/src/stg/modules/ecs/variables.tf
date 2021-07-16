@@ -1,0 +1,17 @@
+variable "env" {}
+variable "vpc_id" {}
+variable "ecs_task_role_arn" {}
+variable "ecs_instance_profile_name" {}
+variable "public_subnet_1_id" {}
+variable "public_subnet_2_id" {}
+variable "aws_security_group_alb_id" {}
+variable "aws_security_group_instance_id" {}
+variable "bucket_name" {}
+variable "db_host" {}
+variable "db_name" {}
+variable "db_user" {}
+variable "db_password" {}
+variable "django-image-url" {}
+variable "nginx-image-url" {}
+variable "scanner_api_url" {}
+variable "scanner_api_key" {}

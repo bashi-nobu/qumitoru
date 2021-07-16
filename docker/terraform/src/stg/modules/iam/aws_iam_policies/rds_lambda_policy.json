@@ -1,0 +1,11 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+      {
+          "Sid": "AllowAuroraToExampleFunction",
+          "Effect": "Allow",
+          "Action": "lambda:InvokeFunction",
+          "Resource": "${invoke_lambda_arn}"
+      }
+  ]
+}

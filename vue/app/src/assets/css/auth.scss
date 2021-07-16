@@ -1,0 +1,18 @@
+.auth-frame {
+  height: 100%;
+}
+.login-card {
+  box-shadow: none !important;
+}
+.login-form {
+  text-align: center;
+}
+.login-btn {
+  padding: 0 40px !important;
+}
+
+@media (max-width: 767px) {
+  .auth-frame {
+    margin-left: -24px !important;
+  }
+}

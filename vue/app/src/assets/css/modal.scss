@@ -1,0 +1,23 @@
+.vm--modal {
+  left: 0px !important;
+  top: 0px !important;
+  margin: auto;
+}
+.modal-header, .modal-body {
+  padding: 5px 25px;
+  color: gray;
+}
+.modal-header {
+  border-bottom: 1px solid #ddd;
+}
+.aggregate-modal .vm--modal {
+    top: 30% !important;
+    height: 40% !important;
+}
+
+@media (max-width: 767px) {
+  .modal-header h2{
+    font-size: 16px !important;
+  }
+}
+
