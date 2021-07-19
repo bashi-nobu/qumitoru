@@ -3,7 +3,13 @@
     <v-card>
       <v-card-title class="upload-form__title">
         <v-icon>mdi-camera-plus-outline</v-icon>
-        をクリックしてアンケートを撮影してください</v-card-title>
+        <span class="upload-form__title__sp">
+          をクリックしてアンケートを撮影してください
+        </span>
+        <span class="upload-form__title__pc">
+          をクリックしてアンケート画像をアップロードしてください
+        </span>
+      </v-card-title>
       <v-card-text class="upload-form__bth-frame">
         <v-form ref="upload_form">
           <v-file-input
@@ -30,6 +36,9 @@
         </AggregateModal>
       </v-card-actions>
     </v-card>
+    <div class="sample_img_dl_frame">
+      サンプル画像は<a href="/sample/qumitoru_sample_imgs.zip">こちらから</a><br>ダウンロードしてください
+    </div>
   </div>
 </template>
 
