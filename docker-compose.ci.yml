@@ -3,12 +3,12 @@ version: '3'
 services:
   db:
     image:
-      mysql:latest
+      mysql:5.7
     container_name:
       qumitoru-mysql
     environment:
       MYSQL_DATABASE: test
-      MYSQL_ROOT_USER: root
+      MYSQL_ROOT_USER: test
       MYSQL_ROOT_PASSWORD: test
     ports:
       - 3306:3306
