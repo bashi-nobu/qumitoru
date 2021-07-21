@@ -20,6 +20,7 @@ services:
       - 3307
     volumes:
       - mysqldata:/var/lib/mysql
+      - ./mysql/conf.d:/etc/mysql/conf.d
   backend:
     container_name:
       qumitoru-django
