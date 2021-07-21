@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        ruby-version: ['3.7.0']
+        python-version: ['3.7.0']
     steps:
     - uses: actions/checkout@v2
     - name: Configure AWS Credentials
@@ -28,6 +28,7 @@ jobs:
         --build-arg AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} \
         --build-arg BUCKET_NAME=${{ secrets.BUCKET_NAME }} \
         --build-arg DJANGO_SECRET_KEY="${{ secrets.DJANGO_SECRET_KEY }}" \
+        --build-arg DJANGO_ENV=dev \
         --build-arg IMAGE_SCAN_API_URL="${{ secrets.IMAGE_SCAN_API_URL }}" \
         --build-arg DB_HOST=db \
         --build-arg DB_NAME=test_test \
@@ -36,9 +37,6 @@ jobs:
         docker-compose -f docker-compose.ci.yml up -d
         sleep 20s
         docker ps -a
-    - name: Set up Mysql for mysql8.0
-      run: |
-        docker exec -t qumitoru-mysql mysql -u root -ptest -e"ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'test';"
     - name: Install vue/cli-service
       run: |
         docker exec -t qumitoru-vue npm i @vue/cli-service

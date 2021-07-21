@@ -3,14 +3,14 @@ version: '3'
 services:
   db:
     image:
-      mysql:latest
+      mysql:5.7
     restart:
       always
     container_name:
       qumitoru-mysql
     environment:
       MYSQL_ROOT_PASSWORD: test
-      MYSQL_USER: root
+      MYSQL_USER: test
       MYSQL_DATABASE: test
       MYSQL_PASSWORD: test
       BIND-ADDRESS: 0.0.0.0
@@ -29,8 +29,6 @@ services:
       dockerfile: ./docker/django/Dockerfile
     env_file:
       ./docker/django/.env
-    command:
-      python3 manage.py runserver 0.0.0.0:8001
     volumes:
       - ./django/qumitoru:/api
     ports:

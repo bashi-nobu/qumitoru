@@ -1,7 +1,7 @@
 .upload-form{
   margin: 100px auto;
   width: 85%;
-  max-width: 600px;
+  max-width: 620px;
   .mdi-camera-plus-outline::before {
     color: coral !important;
   }
@@ -10,6 +10,9 @@
     text-align: center !important;
     color: gray;
     font-size: 1.25rem !important;
+    &__sp {
+      display: none;
+    }
   }
   &__bth-frame {
     .mdi-camera-plus-outline::before {
@@ -48,3 +51,32 @@
     margin-bottom: 15px !important;
   }
 }
+
+.sample_img_dl_frame {
+  position: fixed;
+  top: 500px;
+  right: 30px;
+  width: 220px;
+  height: 50px;
+  background: white;
+  border-radius: 10px;
+  padding: 0 5px;
+  text-align: center;
+}
+
+@media (max-width: 767px) {
+  .upload-form{
+    &__title {
+      &__pc {
+        display: none;
+      }
+      &__sp {
+        display: inline;
+      }
+    }
+  }
+  .sample_img_dl_frame {
+    display: none;
+  }
+}
+
