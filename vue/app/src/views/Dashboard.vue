@@ -17,36 +17,42 @@
               :isMainBox="true"
               :period="this.dates"
               mdiIcon="mdi-hand-heart"
+              scale="10"
             ></ScoreBox>
             <ScoreBox
               categoryName="料理満足度"
               :categoryScore="this.categoryAveList[1]"
               :period="this.dates"
               mdiIcon="mdi-food-fork-drink"
+              scale="5"
             ></ScoreBox>
             <ScoreBox
               categoryName="接客満足度"
               :categoryScore="this.categoryAveList[2]"
               :period="this.dates"
               mdiIcon="mdi-room-service-outline"
+              scale="5"
             ></ScoreBox>
             <ScoreBox
               categoryName="清潔満足度"
               :categoryScore="this.categoryAveList[3]"
               :period="this.dates"
               mdiIcon="mdi-spray-bottle"
+              scale="5"
             ></ScoreBox>
             <ScoreBox
               categoryName="雰囲気満足度"
               :categoryScore="this.categoryAveList[4]"
               :period="this.dates"
               mdiIcon="mdi-floor-lamp"
+              scale="5"
             ></ScoreBox>
             <ScoreBox
               categoryName="コスパ満足度"
               :categoryScore="this.categoryAveList[5]"
               :period="this.dates"
               mdiIcon="mdi-cash-multiple"
+              scale="5"
             ></ScoreBox>
           </div>
         </div>
