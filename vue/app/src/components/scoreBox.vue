@@ -8,10 +8,10 @@
           <i aria-hidden="true" class="v-icon notranslate mdi theme--dark" :class="this.mdiIcon"  style="font-size: 32px;"></i><!---->
         </div>
         <div class="ml-6">
-          <div class="ml-auto text-right">
+          <div>
             <div class="body-3 grey--text font-weight-light">{{this.categoryName}}</div>
-            <h3 class="display-2 font-weight-light text--primary"> {{this.categoryScore}} <small></small>
-            </h3>
+            <span class="ave_score"> {{this.categoryScore}} <small class="category_score_scale">/{{this.scale}}</small>
+            </span>
           </div>
         </div>
       </div>
@@ -48,6 +48,10 @@ export default {
       type: String,
       default: ''
     },
+    scale: {
+      type: Number,
+      default: 0
+    },
     period: {
       type: Array
     }
@@ -83,5 +87,12 @@ export default {
   .mdi{
     color: coral !important;
   }
+}
+.category_score_scale {
+  color: gray;
+  font-size: 1.25rem;
+}
+.ave_score {
+  font-size: 2.0rem !important;
 }
 </style>
