@@ -96,7 +96,7 @@ https://qumitoru.net/
 |  Name  |  Role  |
 | ---- | ---- |
 |  GitHub  |  ソースコードリポジトリ、ビルドイメージの元となるソース管理  |
-|  GitHub Actions  |  Nginx、Rails コンテナのBuild、ECRへのPush、<br>CLI経由でECSクラスター上のサービスおよびタスクの更新  |
+|  GitHub Actions  |  Nginx、Django コンテナのBuild、ECRへのPush、<br>CLI経由でECSクラスター上のサービスおよびタスクの更新  |
 |  ECR  |  コンテナリポジトリ  |
 |  ECS(Fargate)  |  サーバーレスでコンテナを実行するデータプレーン  |
 
