@@ -16,7 +16,7 @@ https://qumitoru.net/
 
 ## テスト用アカウント
 
-メールアドレス：admin<br>
+ユーザー名：admin<br>
 パスワード：123456xyyz
 
 ## アプリケーション機能一覧
